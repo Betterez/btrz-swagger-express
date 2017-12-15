@@ -31,5 +31,5 @@
     "start": "node sample-application/app.js",
     "test": "mocha -r should './test/**/*.js'"
   },
-  "version": "1.0.3"
+  "version": "1.0.4"
 }

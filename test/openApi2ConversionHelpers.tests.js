@@ -40,11 +40,8 @@ describe('swagger 2 conversion helpers', function () {
     let schemaObject = conversionHelper.getBodySchema(sampleArrayParam);
 
     expect(schemaObject).to.deep.equal({
-      properties:
-        {
-          type: 'array',
-          items: { '$ref': '#/definitions/objectToPointTo' }
-        }
+      type: 'array',
+      items: { '$ref': '#/definitions/objectToPointTo' }
     });
   });
   /*

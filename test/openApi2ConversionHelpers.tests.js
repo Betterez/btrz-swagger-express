@@ -11,7 +11,7 @@ describe('swagger 2 conversion helpers', function () {
 
   };
 
-  it('should convert primitive to valid OpenApi 2.0 format', function () {
+  it('should convert body primitive to valid OpenApi 2.0 format', function () {
     let samplePrimitiveParam = {
       name: "testPrimitive",
       description: "testPrimitive id required.",
@@ -26,7 +26,7 @@ describe('swagger 2 conversion helpers', function () {
 
   });
 
-  it('should convert array type to valid OpenApi 2.0 format', function () {
+  it('should convert body array type to valid OpenApi 2.0 format', function () {
     let sampleArrayParam = {
       name: "testArray",
       description: "List of testOperations to apply.",
@@ -42,16 +42,30 @@ describe('swagger 2 conversion helpers', function () {
     expect(schemaObject).to.deep.equal({
       properties:
         {
-          sources:
-            {
-              type: 'array',
-              items: { '$ref': '#/definitions/objectToPointTo' }
-            }
+          type: 'array',
+          items: { '$ref': '#/definitions/objectToPointTo' }
         }
     });
   });
-
-  it('should convert object type to valid OpenApi 2.0 format', function () {
+  /*
+  {
+  "name": "operations",
+  "in": "body",
+  "description": "List of operations to apply to a promo.",
+  "required": true,
+  "schema": {
+  "properties": {
+  "sources": {
+  "type": "array",
+  "items": {
+  "$ref": "#/definitions/PromoUpdateOperation"
+  }
+  }
+  }
+  }
+  }
+  */
+  it('should convert body object type to valid OpenApi 2.0 format', function () {
     let sampleObjectParam = {
       name: "testObject",
       description: "testObject required.",
@@ -67,28 +81,28 @@ describe('swagger 2 conversion helpers', function () {
 
   it('should convert model to OpenAPI 2.0 friendly format', function () {
     let models = {
-        "Info": {
-          "id": "Info",
-          "required": [],
-          "properties": {
-            "name": {
-              "type": "string"
-            }
+      "Info": {
+        "id": "Info",
+        "required": [],
+        "properties": {
+          "name": {
+            "type": "string"
           }
         }
+      }
     };
 
     conversionHelper.convertModelsToOpenApi2(models);
 
-    expect(models).to.deep.equal( {
-        "Info": {
-          "properties": {
-            "name": {
-              "type": "string"
-            }
+    expect(models).to.deep.equal({
+      "Info": {
+        "properties": {
+          "name": {
+            "type": "string"
           }
         }
       }
+    }
     );
   });
 

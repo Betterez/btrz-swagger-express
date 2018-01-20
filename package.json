@@ -33,5 +33,5 @@
     "test": "mocha -r should './test/**/*.js'",
     "test-cc": "node_modules/mocha/bin/_mocha --ui bdd  -t 5000 test/openApi2ConversionHelpers.tests.js"
   },
-  "version": "1.0.7"
+  "version": "1.0.8"
 }

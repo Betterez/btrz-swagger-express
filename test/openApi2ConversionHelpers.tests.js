@@ -44,24 +44,7 @@ describe('swagger 2 conversion helpers', function () {
       items: { '$ref': '#/definitions/objectToPointTo' }
     });
   });
-  /*
-  {
-  "name": "operations",
-  "in": "body",
-  "description": "List of operations to apply to a promo.",
-  "required": true,
-  "schema": {
-  "properties": {
-  "sources": {
-  "type": "array",
-  "items": {
-  "$ref": "#/definitions/PromoUpdateOperation"
-  }
-  }
-  }
-  }
-  }
-  */
+
   it('should convert body object type to valid OpenApi 2.0 format', function () {
     let sampleObjectParam = {
       name: "testObject",
@@ -81,6 +64,7 @@ describe('swagger 2 conversion helpers', function () {
       "Info": {
         "id": "Info",
         "required": [],
+        "type": "object",
         "properties": {
           "name": {
             "type": "string"
@@ -93,6 +77,33 @@ describe('swagger 2 conversion helpers', function () {
 
     expect(models).to.deep.equal({
       "Info": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+    );
+  });
+
+  it('should add type: object if no type exists', function () {
+    let models = {
+      "Info": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    };
+
+    conversionHelper.convertModelsToOpenApi2(models);
+
+    expect(models).to.deep.equal({
+      "Info": {
+        "type": "object",
         "properties": {
           "name": {
             "type": "string"

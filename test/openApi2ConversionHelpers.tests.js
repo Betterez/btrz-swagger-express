@@ -236,15 +236,15 @@ describe('swagger 2 conversion helpers', function () {
       docAfterValue = {
         tags: ['customer'],
         parameters:
-        [
-          {
-            in: 'body',
-            name: 's3Bucket',
-            description: 'Elements required to post a s3 bucket for the account',
-            required: true,
-            schema: { '$ref': '#/definitions/s3BucketPost' }
-          }
-        ]
+          [
+            {
+              in: 'body',
+              name: 's3Bucket',
+              description: 'Elements required to post a s3 bucket for the account',
+              required: true,
+              schema: { '$ref': '#/definitions/s3BucketPost' }
+            }
+          ]
       }
 
     conversionHelper.setParameters(doc, opValue);
@@ -270,40 +270,226 @@ describe('swagger 2 conversion helpers', function () {
       docAfterValue = {
         tags: ['customer'],
         parameters:
-        [
-          {
-            'in': "query",
-            'name' : "parcelString",
-            'description' : "The parcel String",
-            'type': "string",
-            'required' : false
-          },
-          {
-            'in': "query",
-            'name' : "parcelInteger",
-            'description' : "The parcel Integer",
-            'type': "integer",
-            'required' : false
-          },
-          {
-            'in': "query",
-            'name' : "parcelNumber",
-            'description' : "The parcel Number",
-            'type': "number",
-            'required' : false
-          },
-          {
-            'in': "query",
-            'name' : "parcelBoolean",
-            'description' : "The parcel Boolean",
-            'type': "boolean",
-            'required' : false
-          }
-        ]
+          [
+            {
+              'in': "query",
+              'name': "parcelString",
+              'description': "The parcel String",
+              'type': "string",
+              'required': false
+            },
+            {
+              'in': "query",
+              'name': "parcelInteger",
+              'description': "The parcel Integer",
+              'type': "integer",
+              'required': false
+            },
+            {
+              'in': "query",
+              'name': "parcelNumber",
+              'description': "The parcel Number",
+              'type': "number",
+              'required': false
+            },
+            {
+              'in': "query",
+              'name': "parcelBoolean",
+              'description': "The parcel Boolean",
+              'type': "boolean",
+              'required': false
+            }
+          ]
       }
 
     conversionHelper.setParameters(doc, opValue);
 
     expect(doc).to.deep.equal(docAfterValue);
-  });  
+  });
+
+  it('should not convert OpenApi 2 syntax, just assign it to the path', function () {
+    let
+      key = "users",
+      doc = {
+        paths: {}
+      },
+      opValue = {
+        "/users": {
+          "post": {
+            "tags": [
+              "users"
+            ],
+            "summary": "Authenticates a User",
+            "description": "Authenticates a User returning an authorization token",
+            "operationId": "users",
+            "produces": [
+              "application/json"
+            ],
+            "parameters": [
+              {
+                "name": "audience",
+                "in": "body",
+                "description": "Audience for the requested token",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Success",
+                "schema": {
+                  "$ref": "#/definitions/UserWithAuthToken"
+                }
+              },
+              "401": {
+                "description": "\n- Missing or invalid X-API-KEY header.\n- Wrong credentials.\n- API Access Unauthorized. Account not found.\n- API Access Unauthorized. Application not found."
+              }
+            },
+            "deprecated": false
+          }
+        }
+      },
+      docAfterValue = {
+        paths: {
+          "/users": {
+            "post": {
+              "tags": [
+                "users"
+              ],
+              "summary": "Authenticates a User",
+              "description": "Authenticates a User returning an authorization token",
+              "operationId": "users",
+              "produces": [
+                "application/json"
+              ],
+              "parameters": [
+                {
+                  "name": "audience",
+                  "in": "body",
+                  "description": "Audience for the requested token",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Success",
+                  "schema": {
+                    "$ref": "#/definitions/UserWithAuthToken"
+                  }
+                },
+                "401": {
+                  "description": "\n- Missing or invalid X-API-KEY header.\n- Wrong credentials.\n- API Access Unauthorized. Account not found.\n- API Access Unauthorized. Application not found."
+                }
+              },
+              "deprecated": false
+            }
+          }
+        }
+      }
+
+    conversionHelper.convertOperation(doc, opValue, key);
+
+    expect(doc).to.deep.equal(docAfterValue);
+  });
+
+  it('should not convert OpenApi 1.2 syntax to OpenApi 2 syntax', function () {
+    let
+      key = "customers",
+      doc = {
+        paths: {}
+      },
+      opValue = {
+        "path": "/customers/{customerId}/credentials",
+        "method": "POST",
+        "parameters": [
+          paramTypes.path("customerId", "The Customer ID", "string"),
+          {
+            "name": "body",
+            "description": "Customer credential data",
+            "required": true,
+            "type": "PasswordConfirmationCredentialsPost",
+            "paramType": "body"
+          }
+        ],
+        "description": "Set a Credential to a Customer for the first time",
+        "summary": "Set new Customer Credential",
+        "notes": "Sets the Credential of a Customer account that doesn't have it configured. Password must be at least 6 characters long and match the confirmation. The Credential will be pending validation (token+email).",
+        "produces": ["text/plain"],
+        "type": "string",
+        "errorResponses": [
+          { "code": 200, "reason": "Success", "responseModel": "string" },
+          { "code": 401, "reason": "Missing or invalid X-API-KEY header" },
+          { "code": 400, "reason": "Invalid Customer ID." },
+          { "code": 400, "reason": "Invalid password or confirmation does not match." },
+          { "code": 404, "reason": "Customer not found." },
+          { "code": 400, "reason": "Customer account already has the Credential configured." },
+          { "code": 400, "reason": "Password must be at least 6 characters long." },
+          { "code": 400, "reason": "passwordConfirmation is required" },
+          { "code": 400, "reason": "password is required" },
+          { "code": 400, "reason": "Invalid email" },
+          { "code": 400, "reason": "A customer with this email credential already exists" },
+        ],
+        "nickname": "change-customer-credential"
+      },
+      docAfterValue = {
+        paths: {
+          "/customers/{customerId}/credentials": {
+            "post": {
+              "tags": [
+                "customers"
+              ],
+              "summary": "Set new Customer Credential",
+              "description": "Set a Credential to a Customer for the first time",
+              "operationId": "change-customer-credential",
+              "produces": [
+                "text/plain"
+              ],
+              "consumes": [],              
+              "parameters": [
+                {
+                  "name": "customerId",
+                  "in": "path",
+                  "description": "The Customer ID",
+                  "required": true,
+                  "type": "string"
+                },
+                {
+                  "name": "body",
+                  "in": "body",
+                  "description": "Customer credential data",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/PasswordConfirmationCredentialsPost"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Success"
+                },
+                "400": {
+                  "description": "Invalid Customer ID.\n\nInvalid password or confirmation does not match.\n\nCustomer account already has the Credential configured.\n\nPassword must be at least 6 characters long.\n\npasswordConfirmation is required\n\npassword is required\n\nInvalid email\n\nA customer with this email credential already exists"
+                },
+                "401": {
+                  "description": "Missing or invalid X-API-KEY header"
+                },
+                "404": {
+                  "description": "Customer not found."
+                }
+              },
+              "deprecated": false
+            }
+          }
+        }
+      }
+
+    conversionHelper.convertOperation(doc, opValue, key);
+
+    expect(doc).to.deep.equal(docAfterValue);
+  });
 });

@@ -473,7 +473,7 @@ describe('swagger 2 conversion helpers', function () {
                   "description": "Success"
                 },
                 "400": {
-                  "description": "Invalid Customer ID.\n\nInvalid password or confirmation does not match.\n\nCustomer account already has the Credential configured.\n\nPassword must be at least 6 characters long.\n\npasswordConfirmation is required\n\npassword is required\n\nInvalid email\n\nA customer with this email credential already exists"
+                  "description": "\n- Invalid Customer ID.\n- Invalid password or confirmation does not match.\n- Customer account already has the Credential configured.\n- Password must be at least 6 characters long.\n- passwordConfirmation is required\n- password is required\n- Invalid email\n- A customer with this email credential already exists"
                 },
                 "401": {
                   "description": "Missing or invalid X-API-KEY header"

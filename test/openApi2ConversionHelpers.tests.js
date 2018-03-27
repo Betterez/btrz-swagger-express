@@ -307,8 +307,8 @@ describe('swagger 2 conversion helpers', function () {
     expect(doc).to.deep.equal(docAfterValue);
   });
 
-  it('should convert OpenApi 1.2 syntax to OpenApi 2 syntax', function () {
-    let
+  it("should convert OpenApi 1.2 syntax to OpenApi 2 syntax", () => {
+    const
       key = "customers",
       doc = {
         paths: {}
@@ -332,17 +332,17 @@ describe('swagger 2 conversion helpers', function () {
         "produces": ["text/plain"],
         "type": "string",
         "errorResponses": [
-          { "code": 200, "reason": "Success", "responseModel": "string" },
-          { "code": 401, "reason": "Missing or invalid X-API-KEY header" },
-          { "code": 400, "reason": "Invalid Customer ID." },
-          { "code": 400, "reason": "Invalid password or confirmation does not match." },
-          { "code": 404, "reason": "Customer not found." },
-          { "code": 400, "reason": "Customer account already has the Credential configured." },
-          { "code": 400, "reason": "Password must be at least 6 characters long." },
-          { "code": 400, "reason": "passwordConfirmation is required" },
-          { "code": 400, "reason": "password is required" },
-          { "code": 400, "reason": "Invalid email" },
-          { "code": 400, "reason": "A customer with this email credential already exists" },
+          {"code": 200, "reason": "Success", "responseModel": "string"},
+          {"code": 401, "reason": "Missing or invalid X-API-KEY header"},
+          {"code": 400, "reason": "Invalid Customer ID."},
+          {"code": 400, "reason": "Invalid password or confirmation does not match."},
+          {"code": 404, "reason": "Customer not found."},
+          {"code": 400, "reason": "Customer account already has the Credential configured."},
+          {"code": 400, "reason": "Password must be at least 6 characters long."},
+          {"code": 400, "reason": "passwordConfirmation is required"},
+          {"code": 400, "reason": "password is required"},
+          {"code": 400, "reason": "Invalid email"},
+          {"code": 400, "reason": "A customer with this email credential already exists"},
         ],
         "nickname": "change-customer-credential"
       },
@@ -396,7 +396,7 @@ describe('swagger 2 conversion helpers', function () {
             }
           }
         }
-      }
+      };
 
     conversionHelper.convertOperation(doc, opValue, key);
 

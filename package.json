@@ -31,5 +31,5 @@
     "start": "node sample-application/app.js",
     "test": "node_modules/mocha/bin/_mocha --ui bdd  -t 5000 test/*.tests.js"
   },
-  "version": "1.2.2"
+  "version": "1.2.3"
 }

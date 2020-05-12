@@ -1,18 +1,15 @@
 {
   "dependencies": {
-    "lodash": "1.3.1"
+    "lodash": "^4.17.15"
   },
   "description": "Wordnik swagger implementation for the express framework",
   "devDependencies": {
-    "cors": "2.1.1",
     "chai": "latest",
-    "docco": "0.4.x",
-    "express": "3.x",
-    "jshint": "^2.5.3",
-    "mocha": "latest",
-    "mocha-multi": "latest",
+    "cors": "2.1.1",
+    "express": "^4.17.1",
+    "mocha": "^7.1.2",
     "once": "~1.3.0",
-    "request": "~2.36.0"
+    "request": "2.88.2"
   },
   "keywords": [
     "http",

@@ -27,6 +27,7 @@
   "scripts": {
     "start": "node sample-application/app.js",
     "test": "node_modules/mocha/bin/_mocha --ui bdd  -t 5000 test/*.tests.js",
+    "tdd": "node_modules/mocha/bin/_mocha --ui bdd  -t 5000 test/*.tests.js -w",
     "preversion": "npm test",
     "postversion": "git push origin master && git push --tags"
   },

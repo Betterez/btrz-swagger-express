@@ -31,5 +31,5 @@
     "preversion": "npm test",
     "postversion": "git push origin master && git push --tags"
   },
-  "version": "1.4.0"
+  "version": "1.5.0"
 }

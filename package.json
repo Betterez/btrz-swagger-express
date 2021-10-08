@@ -22,7 +22,6 @@
     "url": "git://github.com/Betterez/btrz-swagger-express.git"
   },
   "scripts": {
-    "start": "node sample-application/app.js",
     "test": "node_modules/mocha/bin/_mocha --ui bdd  -t 5000 test/*.tests.js",
     "tdd": "node_modules/mocha/bin/_mocha --ui bdd  -t 5000 test/*.tests.js -w",
     "preversion": "npm test",

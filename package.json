@@ -27,5 +27,5 @@
     "preversion": "npm test",
     "postversion": "git push origin master && git push --tags"
   },
-  "version": "2.0.0"
+  "version": "2.1.0"
 }

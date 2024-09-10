@@ -2,7 +2,7 @@
 
 describe('resource helpers', function () {
   const expect = require("chai").expect;
-  const resourceHelper = require('../lib/resourceHelpers.js');
+  const resourceHelper = require('../lib/helpers/v3/resourceHelpers.js');
 
   it('should sort the OpenApi tags section alphabetically', function () {
     const arrayTags = [{ name: 'healthcheck', description: '' },

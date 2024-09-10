@@ -320,10 +320,10 @@ describe('swagger 2 conversion helpers', function () {
           paramTypes.path("customerId", "The Customer ID", "string"),
           {
             "name": "body",
+            "in": "body",
             "description": "Customer credential data",
             "required": true,
             "type": "PasswordConfirmationCredentialsPost",
-            "paramType": "body"
           }
         ],
         "summary": "Set new Customer Credential",

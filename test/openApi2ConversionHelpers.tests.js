@@ -59,6 +59,22 @@ describe('swagger 2 conversion helpers', function () {
     expect(schemaObject).to.deep.equal({ "$ref": "#/definitions/objectToPointTo" });
   });
 
+  it('should convert a body parameter with a schema that contains a $ref to valid OpenApi 2.0 format', function () {
+    let sampleObjectParam = {
+      name: "testObject",
+      description: "testObject required.",
+      schema: {
+        $ref: "objectToPointTo"
+      },
+      required: true,
+      paramType: "body"
+    };
+
+    let schemaObject = conversionHelper.getBodySchema(sampleObjectParam);
+
+    expect(schemaObject).to.deep.equal({ "$ref": "#/definitions/objectToPointTo" });
+  });
+
   it('should convert model to OpenAPI 2.0 friendly format', function () {
     let models = {
       "Info": {

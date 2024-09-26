@@ -58,6 +58,7 @@ typings/
 .env
 
 .vscode
+.idea
 .DS_Store
 
 package-lock.json

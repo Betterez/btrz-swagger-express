@@ -1,7 +1,9 @@
 'use strict';
 
+const assert = require("node:assert/strict");
+const { describe, it } = require("node:test");
+
 describe('resource helpers', function () {
-  const expect = require("chai").expect;
   const resourceHelper = require('../lib/helpers/v3/resourceHelpers.js');
 
   it('should sort the OpenApi tags section alphabetically', function () {
@@ -19,7 +21,7 @@ describe('resource helpers', function () {
 
     resourceHelper.sortTags(arrayTags);
 
-    expect(arrayTags).to.deep.equal([{ name: 'account', description: '' },
+    assert.deepStrictEqual(arrayTags, [{ name: 'account', description: '' },
     { name: 'applications', description: '' },
     { name: 'customer', description: '' },
     { name: 'customers', description: '' },

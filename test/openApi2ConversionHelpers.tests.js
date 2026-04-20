@@ -1,7 +1,9 @@
 'use strict';
 
+const assert = require("node:assert/strict");
+const { describe, it } = require("node:test");
+
 describe('swagger 2 conversion helpers', function () {
-  const expect = require("chai").expect;
   const conversionHelper = require('../lib/openApi2ConversionHelpers.js');
   const paramTypes = require('../lib/paramTypes.js')
   let sampleArrayParam = {
@@ -22,7 +24,7 @@ describe('swagger 2 conversion helpers', function () {
 
     let schemaObject = conversionHelper.getBodySchema(samplePrimitiveParam);
 
-    expect(schemaObject).to.deep.equal({ "type": "string" });
+    assert.deepStrictEqual(schemaObject, { "type": "string" });
 
   });
 
@@ -39,7 +41,7 @@ describe('swagger 2 conversion helpers', function () {
 
     let schemaObject = conversionHelper.getBodySchema(sampleArrayParam);
 
-    expect(schemaObject).to.deep.equal({
+    assert.deepStrictEqual(schemaObject, {
       type: 'array',
       items: { '$ref': '#/definitions/objectToPointTo' }
     });
@@ -56,7 +58,7 @@ describe('swagger 2 conversion helpers', function () {
 
     let schemaObject = conversionHelper.getBodySchema(sampleObjectParam);
 
-    expect(schemaObject).to.deep.equal({ "$ref": "#/definitions/objectToPointTo" });
+    assert.deepStrictEqual(schemaObject, { "$ref": "#/definitions/objectToPointTo" });
   });
 
   it('should convert a body parameter with a schema that contains a $ref to valid OpenApi 2.0 format', function () {
@@ -72,7 +74,7 @@ describe('swagger 2 conversion helpers', function () {
 
     let schemaObject = conversionHelper.getBodySchema(sampleObjectParam);
 
-    expect(schemaObject).to.deep.equal({ "$ref": "#/definitions/objectToPointTo" });
+    assert.deepStrictEqual(schemaObject, { "$ref": "#/definitions/objectToPointTo" });
   });
 
   it('should convert model to OpenAPI 2.0 friendly format', function () {
@@ -91,7 +93,7 @@ describe('swagger 2 conversion helpers', function () {
 
     conversionHelper.convertModelsToOpenApi2(models);
 
-    expect(models).to.deep.equal({
+    assert.deepStrictEqual(models, {
       "Info": {
         "type": "object",
         "properties": {
@@ -117,7 +119,7 @@ describe('swagger 2 conversion helpers', function () {
 
     conversionHelper.convertModelsToOpenApi2(models);
 
-    expect(models).to.deep.equal({
+    assert.deepStrictEqual(models, {
       "Info": {
         "type": "object",
         "properties": {
@@ -158,7 +160,7 @@ describe('swagger 2 conversion helpers', function () {
 
     conversionHelper.setResponses(doc, opValue);
 
-    expect(doc).to.deep.equal(docAfterValue);
+    assert.deepStrictEqual(doc, docAfterValue);
   });
 
   it('should leave 2.0 responses unmodified', function () {
@@ -196,7 +198,7 @@ describe('swagger 2 conversion helpers', function () {
 
     conversionHelper.setResponses(doc, opValue);
 
-    expect(doc).to.deep.equal(docAfterValue);
+    assert.deepStrictEqual(doc, docAfterValue);
   });
 
   it('should convert body parameter set with paramTypes.body to OpenApi 2 format', function () {
@@ -228,7 +230,7 @@ describe('swagger 2 conversion helpers', function () {
 
     conversionHelper.setParameters(doc, opValue);
 
-    expect(doc).to.deep.equal(docAfterValue);
+    assert.deepStrictEqual(doc, docAfterValue);
   });
 
   it('should not convert schema property if it has already been set. (Ie, already using 2.0 syntax)', function () {
@@ -265,7 +267,7 @@ describe('swagger 2 conversion helpers', function () {
 
     conversionHelper.setParameters(doc, opValue);
 
-    expect(doc).to.deep.equal(docAfterValue);
+    assert.deepStrictEqual(doc, docAfterValue);
   });
 
   it('should convert primitive types to lowercase', function () {
@@ -320,7 +322,7 @@ describe('swagger 2 conversion helpers', function () {
 
     conversionHelper.setParameters(doc, opValue);
 
-    expect(doc).to.deep.equal(docAfterValue);
+    assert.deepStrictEqual(doc, docAfterValue);
   });
 
   it("should convert OpenApi 1.2 syntax to OpenApi 2 syntax", () => {
@@ -415,6 +417,6 @@ describe('swagger 2 conversion helpers', function () {
 
     conversionHelper.convertOperation(doc, opValue, key);
 
-    expect(doc).to.deep.equal(docAfterValue);
+    assert.deepStrictEqual(doc, docAfterValue);
   });
 });

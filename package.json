@@ -1,13 +1,9 @@
 {
   "dependencies": {
-    "lodash": "4.17.21",
-    "uuid": "^8.3.2"
+    "uuid": "14.0.0"
   },
   "description": "Wordnik swagger implementation for the express framework",
-  "devDependencies": {
-    "chai": "4.3.6",
-    "mocha": "10.0.0"
-  },
+  "devDependencies": {},
   "keywords": [
     "http",
     "rest",
@@ -22,8 +18,8 @@
     "url": "git://github.com/Betterez/btrz-swagger-express.git"
   },
   "scripts": {
-    "test": "node_modules/mocha/bin/_mocha --ui bdd  -t 5000 test/*.tests.js",
-    "tdd": "node_modules/mocha/bin/_mocha --ui bdd  -t 5000 test/*.tests.js -w",
+    "test": "node --test test/*.tests.js",
+    "tdd": "node --test --watch test/*.tests.js",
     "preversion": "npm test",
     "postversion": "git push origin master && git push --tags"
   },

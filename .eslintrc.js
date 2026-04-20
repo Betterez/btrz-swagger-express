@@ -2,22 +2,13 @@ module.exports = {
   root: true,
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: "eslint:recommended",
-  plugins: [
-    "mocha"
-  ],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
   },
   "globals": {
     "_": true,
-    "Formatter": true,
-    "describe": true,
-    "before": true,
-    "after": true,
-    "afterEach": true,
-    "beforeEach": true,
-    "it": true
+    "Formatter": true
   },
   "env": {
     "es6": true,
@@ -25,11 +16,6 @@ module.exports = {
   },
   // add your custom rules here
   "rules": {
-    // Mocha
-    "mocha/handle-done-callback": 2,
-    "mocha/no-global-tests": 2,
-
-
     "array-callback-return": 2,
     "consistent-return": 2,
     "curly": 2,

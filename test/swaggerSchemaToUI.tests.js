@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
+const assert = require("node:assert/strict");
+const { describe, it, beforeEach } = require("node:test");
+
 describe("swaggerSchemaToUI", () => {
-  const expect = require("chai").expect;
   const {
     swaggerSchemaToUI
   } = require("../lib/swaggerSchemaToUI");
@@ -6704,21 +6706,21 @@ describe("swaggerSchemaToUI", () => {
   it("should return null if schema not found", () => {
     const name = "InvalidName";
     const result = swaggerSchemaToUI(schema, name);
-    expect(result).to.be.eql(null);
+    assert.strictEqual(result, null);
   });
 
   it("should return the proper schema given the name", () => {
     const name = "PaymentTerminalPost";
     const result = swaggerSchemaToUI(schema, name);
-    expect(result).to.not.be.eql(null);
-    expect(result.properties.serialNumber.type).to.be.eql("string");
+    assert.notStrictEqual(result, null);
+    assert.strictEqual(result.properties.serialNumber.type, "string");
   });
 
   it("should process the enum", () => {
     const name = "PaymentTerminalPost";
     const result = swaggerSchemaToUI(schema, name);
-    expect(result.properties.protocol.options[0].key).to.be.eql("ws");
-    expect(result.properties.protocol.options[0].value).to.be.eql("ws");
+    assert.strictEqual(result.properties.protocol.options[0].key, "ws");
+    assert.strictEqual(result.properties.protocol.options[0].value, "ws");
   });
 
   it("should set a hint property if given", () => {
@@ -6728,8 +6730,8 @@ describe("swaggerSchemaToUI", () => {
         hint: "hintLexicon"
       }
     });
-    expect(result).to.not.be.eql(null);
-    expect(result.properties.partNumber.hint).to.be.eql("hintLexicon");
+    assert.notStrictEqual(result, null);
+    assert.strictEqual(result.properties.partNumber.hint, "hintLexicon");
   });
 
   it("should turn a string property into an enum property", () => {
@@ -6742,10 +6744,10 @@ describe("swaggerSchemaToUI", () => {
         ]
       }
     });
-    expect(result.properties.locationId.type).to.be.eql("string");
-    expect(result.properties.locationId.enum).to.be.eql([]);
-    expect(result.properties.locationId.options[0].key).to.be.eql("1");
-    expect(result.properties.locationId.options[0].value).to.be.eql("Superb");
+    assert.strictEqual(result.properties.locationId.type, "string");
+    assert.deepStrictEqual(result.properties.locationId.enum, []);
+    assert.strictEqual(result.properties.locationId.options[0].key, "1");
+    assert.strictEqual(result.properties.locationId.options[0].value, "Superb");
   });
 
   it("should return the selectOption for all enum properties", () => {
@@ -6758,8 +6760,8 @@ describe("swaggerSchemaToUI", () => {
         ]
       }
     });
-    expect(result.properties.locationId.selectedOption).to.be.eql("");
-    expect(result.properties.protocol.selectedOption).to.be.eql("");
+    assert.strictEqual(result.properties.locationId.selectedOption, "");
+    assert.strictEqual(result.properties.protocol.selectedOption, "");
   });
 
   it("should return the proper selectOption for all enum properties when given a full schema", () => {
@@ -6776,14 +6778,14 @@ describe("swaggerSchemaToUI", () => {
         ]
       }
     }, null, model);
-    expect(result.properties.locationId.selectedOption).to.be.eql({ key: "3", value: "Third" });
-    expect(result.properties.protocol.selectedOption).to.be.eql({ key: 'ws', value: 'ws' });
+    assert.deepStrictEqual(result.properties.locationId.selectedOption, { key: "3", value: "Third" });
+    assert.deepStrictEqual(result.properties.protocol.selectedOption, { key: 'ws', value: 'ws' });
   });
 
   it("should create the 'validations' for vuevalidate", () => {
     const name = "PaymentTerminalPost";
     const result = swaggerSchemaToUI(schema, name, null, "terminal");
-    expect(result.validations).to.not.be.eql(undefined);
+    assert.notStrictEqual(result.validations, undefined);
   });
 
   it("should return the right schema for lexiconKeys for a null model", () => {
@@ -6791,18 +6793,18 @@ describe("swaggerSchemaToUI", () => {
     const accountId = "accountId";
     const result = swaggerSchemaToUI(schema, modelName, null, "seatfees", null, accountId);
 
-    expect(result.properties.lexiconKeys.required).to.contain("name");
+    assert.ok(result.properties.lexiconKeys.required.includes("name"));
 
-    expect(result.properties.lexiconKeys.model.name.key).to.contain("name-accountId-");
-    expect(result.properties.lexiconKeys.model.name.values).to.be.eql({"en-us": ""});
+    assert.ok(result.properties.lexiconKeys.model.name.key.includes("name-accountId-"));
+    assert.deepStrictEqual(result.properties.lexiconKeys.model.name.values, {"en-us": ""});
 
-    expect(result.properties.lexiconKeys.properties).to.have.property("name");
-    expect(result.properties.lexiconKeys.properties.name).to.have.property("properties");
+    assert.ok(Object.prototype.hasOwnProperty.call(result.properties.lexiconKeys.properties, "name"));
+    assert.ok(Object.prototype.hasOwnProperty.call(result.properties.lexiconKeys.properties.name, "properties"));
 
-    expect(result.properties.lexiconKeys.properties.name.properties).to.have.property("key");
-    expect(result.properties.lexiconKeys.properties.name.properties).to.have.property("values");
-    expect(result.properties.lexiconKeys.properties.name.properties.key.type).to.be.eql("string");
-    expect(result.properties.lexiconKeys.properties.name.properties.values.properties).to.be.eql({
+    assert.ok(Object.prototype.hasOwnProperty.call(result.properties.lexiconKeys.properties.name.properties, "key"));
+    assert.ok(Object.prototype.hasOwnProperty.call(result.properties.lexiconKeys.properties.name.properties, "values"));
+    assert.strictEqual(result.properties.lexiconKeys.properties.name.properties.key.type, "string");
+    assert.deepStrictEqual(result.properties.lexiconKeys.properties.name.properties.values.properties, {
       'en-us': { type: 'string', description: 'The lexicon value for en-us' },
       'fr-fr': { type: 'string', description: 'The lexicon value for fr-fr' },
       'de-de': { type: 'string', description: 'The lexicon value for de-de' },
@@ -6823,7 +6825,7 @@ describe("swaggerSchemaToUI", () => {
     }
     const result = swaggerSchemaToUI(schema, modelName, null, "seatfees", model, accountId);
 
-    expect(result.properties.lexiconKeys.model.name.key).to.contain("some-saved-key");
-    expect(result.properties.lexiconKeys.model.name.values).to.be.eql({"en-us": ""});
+    assert.ok(result.properties.lexiconKeys.model.name.key.includes("some-saved-key"));
+    assert.deepStrictEqual(result.properties.lexiconKeys.model.name.values, {"en-us": ""});
   });  
 });

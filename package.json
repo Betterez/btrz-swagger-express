@@ -21,7 +21,8 @@
     "test": "node --test test/*.tests.js",
     "tdd": "node --test --watch test/*.tests.js",
     "preversion": "npm test",
-    "postversion": "git push origin master && git push --tags"
+    "postversion": "git push origin master && git push --tags",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "version": "3.1.0"
 }
